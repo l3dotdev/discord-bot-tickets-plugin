@@ -1,6 +1,6 @@
 import type { CommandExecutor } from "@l3dev/discord.js-helpers";
 
-import { createTicketsCommand } from "./tickets.command";
+import { createTicketsCommand } from "./tickets.command.js";
 
 type GetCommandModulesConfig = {
 	commandExecutor: CommandExecutor;
