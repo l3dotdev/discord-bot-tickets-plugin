@@ -1,6 +1,6 @@
 {
 	"name": "@l3dev/discord-bot-tickets-plugin",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "A plugin for discord bot tickets",
 	"type": "module",
 	"main": "./build/index.js",

@@ -18,26 +18,24 @@ import * as setPerUserLimitCommand from "./tickets/set-per-user-limit.command.js
 import * as setupCommand from "./tickets/setup.command.js";
 import { errorMessage } from "../messages/error.message.js";
 
-type CreateTicketsCommandConfig = {
-	commandExecutor: CommandExecutor;
-};
-
-export function createTicketsCommand({ commandExecutor }: CreateTicketsCommandConfig) {
+export function createTicketsCommand(commandExecutor: CommandExecutor) {
 	const name = "tickets";
 
 	const subcommands = loadSubcommands({
 		parentCommandName: name,
 		getModules<T>() {
 			return {
-				"add-field.command.ts": addFieldCommand,
-				"delete.command.ts": deleteCommand,
-				"edit.command.ts": editCommand,
-				"fix.command.ts": fixCommand,
-				"remove-all-fields.command.ts": removeAllFieldsCommand,
-				"remove-field.command.ts": removeFieldCommand,
-				"set-mentions.command.ts": setMentionsCommand,
-				"set-per-user-limit.command.ts": setPerUserLimitCommand,
-				"setup.command.ts": setupCommand
+				"@l3dev/discord-bot-tickets-plugin/tickets/add-field.command.ts": addFieldCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/delete.command.ts": deleteCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/edit.command.ts": editCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/fix.command.ts": fixCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/remove-all-fields.command.ts":
+					removeAllFieldsCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/remove-field.command.ts": removeFieldCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/set-mentions.command.ts": setMentionsCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/set-per-user-limit.command.ts":
+					setPerUserLimitCommand,
+				"@l3dev/discord-bot-tickets-plugin/tickets/setup.command.ts": setupCommand
 			} as unknown as Record<string, T>;
 		},
 		logger
