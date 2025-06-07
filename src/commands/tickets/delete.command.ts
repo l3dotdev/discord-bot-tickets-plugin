@@ -1,0 +1,47 @@
+import { defineSubcommand } from "@l3dev/discord.js-helpers";
+import { logger } from "@l3dev/logger";
+import { NONE, Result } from "@l3dev/result";
+import { MessageFlags } from "discord.js";
+
+import { getBotTicketChannelByDiscordId } from "../../logic.js";
+import { errorMessage } from "../../messages/error.message.js";
+import { ticketChannelDeleteMessage } from "../../messages/ticket-channel-delete.message.js";
+
+export default defineSubcommand({
+	name: "delete",
+	define(builder) {
+		return builder.setName(this.name).setDescription("Delete the current ticket channel");
+	},
+	async execute(interaction) {
+		const ticketChannelResult = await getBotTicketChannelByDiscordId(interaction.channelId);
+		if (!ticketChannelResult.ok || !ticketChannelResult.value) {
+			if (!ticketChannelResult.ok) {
+				logger.error("Error getting ticket channel", ticketChannelResult);
+			}
+			return await Result.fromPromise(
+				interaction.reply({
+					...errorMessage.build("Failed to find existing ticket channel").value,
+					flags: MessageFlags.Ephemeral
+				})
+			);
+		}
+
+		const sendResult = await Result.fromPromise(
+			{ onError: { type: "REPLY_DELETE_TICKET_CHANNEL" } },
+			interaction.reply({
+				...ticketChannelDeleteMessage.build().value
+			})
+		);
+		if (!sendResult.ok) {
+			logger.error("Error sending ticket channel delete message", sendResult);
+			return await Result.fromPromise(
+				interaction.reply({
+					...errorMessage.build("Failed to send the delete confirmation message").value,
+					flags: MessageFlags.Ephemeral
+				})
+			);
+		}
+
+		return NONE;
+	}
+});
