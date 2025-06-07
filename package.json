@@ -8,23 +8,28 @@
 	"exports": {
 		".": {
 			"types": "./build/index.d.ts",
-			"import": "./build/index.js"
+			"import": "./build/index.js",
+			"require": "./build/index.js"
 		},
 		"./commands": {
 			"types": "./build/commands/index.d.ts",
-			"import": "./build/commands/index.js"
+			"import": "./build/commands/index.js",
+			"require": "./build/commands/index.js"
 		},
 		"./events": {
 			"types": "./build/events/index.d.ts",
-			"import": "./build/events/index.js"
+			"import": "./build/events/index.js",
+			"require": "./build/events/index.js"
 		},
 		"./db": {
 			"types": "./build/db/index.d.ts",
-			"import": "./build/db/index.js"
+			"import": "./build/db/index.js",
+			"require": "./build/db/index.js"
 		},
 		"./db-schema/tickets.schema": {
 			"types": "./build/db/tickets.schema.d.ts",
-			"import": "./build/db/tickets.schema.js"
+			"import": "./build/db/tickets.schema.js",
+			"require": "./build/db/tickets.schema.js"
 		}
 	},
 	"files": [
