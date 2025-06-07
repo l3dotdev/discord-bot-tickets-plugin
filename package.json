@@ -1,6 +1,6 @@
 {
 	"name": "@l3dev/discord-bot-tickets-plugin",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A plugin for discord bot tickets",
 	"type": "module",
 	"main": "./build/index.js",
@@ -10,10 +10,6 @@
 			"types": "./build/index.d.ts",
 			"import": "./build/index.js"
 		},
-		"./db-schema": {
-			"types": "./build/db/index.d.ts",
-			"import": "./build/db/index.js"
-		},
 		"./commands": {
 			"types": "./build/commands/index.d.ts",
 			"import": "./build/commands/index.js"
@@ -21,6 +17,14 @@
 		"./events": {
 			"types": "./build/events/index.d.ts",
 			"import": "./build/events/index.js"
+		},
+		"./db": {
+			"types": "./build/db/index.d.ts",
+			"import": "./build/db/index.js"
+		},
+		"./db-schema/tickets.schema": {
+			"types": "./build/db/tickets.schema.d.ts",
+			"import": "./build/db/tickets.schema.js"
 		}
 	},
 	"files": [
