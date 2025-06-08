@@ -1,6 +1,6 @@
 {
 	"name": "@l3dev/discord-bot-tickets-plugin",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "A plugin for discord bot tickets",
 	"type": "module",
 	"main": "./build/index.js",
@@ -11,25 +11,10 @@
 			"import": "./build/index.js",
 			"require": "./build/index.js"
 		},
-		"./commands": {
-			"types": "./build/commands/index.d.ts",
-			"import": "./build/commands/index.js",
-			"require": "./build/commands/index.js"
-		},
-		"./events": {
-			"types": "./build/events/index.d.ts",
-			"import": "./build/events/index.js",
-			"require": "./build/events/index.js"
-		},
-		"./db": {
-			"types": "./build/db/index.d.ts",
-			"import": "./build/db/index.js",
-			"require": "./build/db/index.js"
-		},
-		"./db-schema/tickets.schema": {
-			"types": "./build/db/tickets.schema.d.ts",
-			"import": "./build/db/tickets.schema.js",
-			"require": "./build/db/tickets.schema.js"
+		"./db-schema": {
+			"types": "./build/db-schema/index.d.ts",
+			"import": "./build/db-schema/index.js",
+			"require": "./build/db-schema/index.js"
 		}
 	},
 	"files": [
@@ -47,6 +32,11 @@
 	},
 	"author": "l3dotdev",
 	"license": "MIT",
+	"peerDependencies": {
+		"@l3dev/discord.js-helpers": ">=0.8.0 <1.0.0",
+		"discord.js": ">=14.19.0 <15.0.0",
+		"drizzle-orm": "^0.40.1"
+	},
 	"devDependencies": {
 		"@l3dev/drizzle-helpers": "^0.2.0",
 		"@types/eslint": "^9.6.1",
@@ -62,10 +52,7 @@
 		"typescript-eslint": "^8.29.1"
 	},
 	"dependencies": {
-		"@l3dev/discord.js-helpers": "^0.5.0",
 		"@l3dev/logger": "^0.2.0",
-		"@l3dev/result": "^0.2.0",
-		"discord.js": "^14.19.0",
-		"drizzle-orm": "^0.40.1"
+		"@l3dev/result": "^0.2.0"
 	}
 }
