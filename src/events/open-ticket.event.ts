@@ -1,4 +1,4 @@
-import { defineEventListener } from "@l3dev/discord.js-helpers";
+import { defineEventListener, iHaveDiscordPermissions } from "@l3dev/discord.js-helpers";
 import { NONE, Result } from "@l3dev/result";
 import { Events, MessageFlags } from "discord.js";
 
@@ -13,12 +13,42 @@ export default function ({ ticketChannels, ticketFields, tickets }: Logic) {
 		default: defineEventListener({
 			event: Events.InteractionCreate,
 			listener: async function (interaction) {
+				const channel = interaction.channel;
 				if (
-					!interaction.guildId ||
+					!interaction.guild ||
 					!interaction.isButton() ||
-					!interaction.customId.startsWith(ButtonCustomId.OpenBotTicket)
+					!interaction.customId.startsWith(ButtonCustomId.OpenBotTicket) ||
+					!channel ||
+					channel.isDMBased()
 				) {
 					return NONE;
+				}
+
+				const permissionsResult = await iHaveDiscordPermissions(
+					["ManageThreads", "SendMessagesInThreads", "CreatePrivateThreads"],
+					{
+						guild: interaction.guild,
+						channel
+					}
+				);
+				if (!permissionsResult.ok) {
+					if (permissionsResult.type === "MISSING_PERMISSIONS") {
+						const missingPermissions = permissionsResult.context.missingPermissions
+							.map((p) => `\`${p}\``)
+							.join(", ");
+						return await Result.fromPromise(
+							interaction.reply({
+								...errorMessage.build(`Missing permissions: ${missingPermissions}`).value,
+								flags: MessageFlags.Ephemeral
+							})
+						);
+					}
+					return await Result.fromPromise(
+						interaction.reply({
+							...errorMessage.build("Failed to check permissions").value,
+							flags: MessageFlags.Ephemeral
+						})
+					);
 				}
 
 				const ticketChannelId = Number(
@@ -101,7 +131,7 @@ export default function ({ ticketChannels, ticketFields, tickets }: Logic) {
 					return await Result.fromPromise(
 						{ onError: { type: "REPLY_BOT_TICKET_OPENED" } },
 						interaction.editReply({
-							...openTicketReplyMessage.build(interaction.guildId, thread.id).value
+							...openTicketReplyMessage.build(interaction.guild.id, thread.id).value
 						})
 					);
 				}

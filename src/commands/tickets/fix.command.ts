@@ -1,6 +1,6 @@
-import { defineSubcommand } from "@l3dev/discord.js-helpers";
+import { defineSubcommand, iHaveDiscordPermissions } from "@l3dev/discord.js-helpers";
 import { logger } from "@l3dev/logger";
-import { Result } from "@l3dev/result";
+import { NONE, Result } from "@l3dev/result";
 import { MessageFlags } from "discord.js";
 
 import type { Logic } from "../../logic/index.js";
@@ -16,18 +16,39 @@ export default function ({ ticketChannels }: Logic) {
 					.setDescription("Fix the channel message of the current ticket channel");
 			},
 			async execute(interaction) {
-				if (!interaction.channel || !interaction.channel.isSendable()) {
+				const channel = interaction.channel;
+				if (!interaction.guild || !channel || channel.isDMBased() || !channel.isSendable()) {
+					return NONE;
+				}
+
+				const permissionsResult = await iHaveDiscordPermissions(
+					["SendMessages", "ManageThreads", "CreatePrivateThreads", "SendMessagesInThreads"],
+					{
+						guild: interaction.guild,
+						channel
+					}
+				);
+				if (!permissionsResult.ok) {
+					if (permissionsResult.type === "MISSING_PERMISSIONS") {
+						const missingPermissions = permissionsResult.context.missingPermissions
+							.map((p) => `\`${p}\``)
+							.join(", ");
+						return await Result.fromPromise(
+							interaction.reply({
+								...errorMessage.build(`Missing permissions: ${missingPermissions}`).value,
+								flags: MessageFlags.Ephemeral
+							})
+						);
+					}
 					return await Result.fromPromise(
 						interaction.reply({
-							...errorMessage.build("Run command in a valid channel").value,
+							...errorMessage.build("Failed to check permissions").value,
 							flags: MessageFlags.Ephemeral
 						})
 					);
 				}
 
-				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(
-					interaction.channel.id
-				);
+				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(channel.id);
 				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
 					if (!ticketChannelResult.ok) {
 						logger.error("Error getting ticket channel", ticketChannelResult);

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@l3dev/discord.js-helpers':
-        specifier: '>=0.8.0 <1.0.0'
-        version: 0.8.0(discord.js@14.19.1)
+        specifier: '>=0.8.1 <1.0.0'
+        version: 0.8.1(discord.js@14.19.1)
       '@l3dev/logger':
         specifier: ^0.2.0
         version: 0.2.0
@@ -393,8 +393,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@l3dev/discord.js-helpers@0.8.0':
-    resolution: {integrity: sha512-gSKc4s9XkhKhpTxs4htKemQspcm+pZQ9lBdaRdqp/FvGMVU0Tt5O8AgsL0ISIbvg/2K4okOF8LNI96n/JaXabg==}
+  '@l3dev/discord.js-helpers@0.8.1':
+    resolution: {integrity: sha512-1CyEPNFrOG2OvmRF9PG3VAk78btXslv0Hz3qmUDS9auEb+AOEfn4HQQOmYPY3J5xwlzcbruKw/x+BvlGfAO0nQ==}
     peerDependencies:
       discord.js: ^14.19.0
 
@@ -2280,7 +2280,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@l3dev/discord.js-helpers@0.8.0(discord.js@14.19.1)':
+  '@l3dev/discord.js-helpers@0.8.1(discord.js@14.19.1)':
     dependencies:
       '@l3dev/result': 0.2.0
       discord.js: 14.19.1
