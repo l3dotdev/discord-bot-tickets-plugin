@@ -1,7 +1,7 @@
 import { relations, type InferSelectModel } from "drizzle-orm";
 import { boolean, integer, pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
 
-import type { BotTicketFieldType } from "../logic.js";
+import type { BotTicketFieldType } from "../logic/ticket-fields.js";
 
 export type DbBotTicketChannel = InferSelectModel<typeof botTicketChannels>;
 
