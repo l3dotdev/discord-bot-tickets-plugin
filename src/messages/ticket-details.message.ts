@@ -7,7 +7,10 @@ import {
 	SeparatorSpacingSize
 } from "discord.js";
 
-import type { DbBotTicketChannel, DbBotTicketFieldAnswerWithField } from "../db/tickets.schema.js";
+import type {
+	DbBotTicketChannel,
+	DbBotTicketFieldAnswerWithField
+} from "../db-schema/tickets.schema.js";
 import { ButtonCustomId } from "../ids.js";
 
 export const ticketDetailsMessage = defineMessage({

@@ -7,55 +7,57 @@ import {
 import type { CommandExecutor } from "@l3dev/discord.js-helpers";
 import { logger } from "@l3dev/logger";
 
-import * as addFieldCommand from "./tickets/add-field.command.js";
-import * as deleteCommand from "./tickets/delete.command.js";
-import * as editCommand from "./tickets/edit.command.js";
-import * as fixCommand from "./tickets/fix.command.js";
-import * as removeAllFieldsCommand from "./tickets/remove-all-fields.command.js";
-import * as removeFieldCommand from "./tickets/remove-field.command.js";
-import * as setMentionsCommand from "./tickets/set-mentions.command.js";
-import * as setPerUserLimitCommand from "./tickets/set-per-user-limit.command.js";
-import * as setupCommand from "./tickets/setup.command.js";
+import { PLUGIN_NAME } from "../constants.js";
+import addFieldCommand from "./tickets/add-field.command.js";
+import deleteCommand from "./tickets/delete.command.js";
+import editCommand from "./tickets/edit.command.js";
+import fixCommand from "./tickets/fix.command.js";
+import removeAllFieldsCommand from "./tickets/remove-all-fields.command.js";
+import removeFieldCommand from "./tickets/remove-field.command.js";
+import setMentionsCommand from "./tickets/set-mentions.command.js";
+import setPerUserLimitCommand from "./tickets/set-per-user-limit.command.js";
+import setupCommand from "./tickets/setup.command.js";
+import type { Logic } from "../logic/index.js";
 import { errorMessage } from "../messages/error.message.js";
 
-export function createTicketsCommand(commandExecutor: CommandExecutor) {
+export default function (commandExecutor: CommandExecutor, logic: Logic) {
 	const name = "tickets";
 
 	const subcommands = loadSubcommands({
 		parentCommandName: name,
 		getModules<T>() {
 			return {
-				"@l3dev/discord-bot-tickets-plugin/tickets/add-field.command.ts": addFieldCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/delete.command.ts": deleteCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/edit.command.ts": editCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/fix.command.ts": fixCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/remove-all-fields.command.ts":
-					removeAllFieldsCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/remove-field.command.ts": removeFieldCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/set-mentions.command.ts": setMentionsCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/set-per-user-limit.command.ts":
-					setPerUserLimitCommand,
-				"@l3dev/discord-bot-tickets-plugin/tickets/setup.command.ts": setupCommand
+				[`${PLUGIN_NAME}/tickets/add-field.command.ts`]: addFieldCommand(logic),
+				[`${PLUGIN_NAME}/tickets/delete.command.ts`]: deleteCommand(logic),
+				[`${PLUGIN_NAME}/tickets/edit.command.ts`]: editCommand(logic),
+				[`${PLUGIN_NAME}/tickets/fix.command.ts`]: fixCommand(logic),
+				[`${PLUGIN_NAME}/tickets/remove-all-fields.command.ts`]: removeAllFieldsCommand(logic),
+				[`${PLUGIN_NAME}/tickets/remove-field.command.ts`]: removeFieldCommand(logic),
+				[`${PLUGIN_NAME}/tickets/set-mentions.command.ts`]: setMentionsCommand(logic),
+				[`${PLUGIN_NAME}/tickets/set-per-user-limit.command.ts`]: setPerUserLimitCommand(logic),
+				[`${PLUGIN_NAME}/tickets/setup.command.ts`]: setupCommand(logic)
 			} as unknown as Record<string, T>;
 		},
 		logger
 	});
 
-	return defineCommand({
-		name,
-		subcommands,
-		define(builder) {
-			builder = builder.setName(this.name).setDescription("Manage and configure bot tickets");
-			addSubcommands(builder, subcommands);
-
-			return builder;
-		},
-		execute: createSubcommandExecutor({
+	return {
+		default: defineCommand({
+			name,
 			subcommands,
-			commandExecutor,
-			getNotFoundMessage(subcommandName, _interaction) {
-				return errorMessage.build(`Unknown subcommand '${subcommandName}'`);
-			}
+			define(builder) {
+				builder = builder.setName(this.name).setDescription("Manage and configure bot tickets");
+				addSubcommands(builder, subcommands);
+
+				return builder;
+			},
+			execute: createSubcommandExecutor({
+				subcommands,
+				commandExecutor,
+				getNotFoundMessage(subcommandName, _interaction) {
+					return errorMessage.build(`Unknown subcommand '${subcommandName}'`);
+				}
+			})
 		})
-	});
+	};
 }
