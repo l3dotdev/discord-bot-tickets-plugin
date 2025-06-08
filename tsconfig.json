@@ -19,6 +19,7 @@
 		"stripInternal": true,
 		"verbatimModuleSyntax": true,
 		"sourceMap": true,
+		"inlineSources": true,
 		"outDir": "build"
 	},
 	"include": ["src/**/*.js", "src/**/*.ts"],

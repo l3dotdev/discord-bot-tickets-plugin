@@ -1,6 +1,6 @@
 {
 	"name": "@l3dev/discord-bot-tickets-plugin",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"description": "A plugin for discord bot tickets",
 	"type": "module",
 	"main": "./build/index.js",
@@ -38,7 +38,7 @@
 		"drizzle-orm": "^0.40.1"
 	},
 	"devDependencies": {
-		"@l3dev/drizzle-helpers": "^0.2.0",
+		"@l3dev/drizzle-helpers": "^0.2.1",
 		"@types/eslint": "^9.6.1",
 		"@types/node": "^22.14.1",
 		"eslint": "^9.24.0",
@@ -52,7 +52,7 @@
 		"typescript-eslint": "^8.29.1"
 	},
 	"dependencies": {
-		"@l3dev/logger": "^0.2.0",
-		"@l3dev/result": "^0.2.0"
+		"@l3dev/logger": "^0.2.1",
+		"@l3dev/result": "^0.2.1"
 	}
 }
