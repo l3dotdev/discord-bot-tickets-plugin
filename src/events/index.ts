@@ -1,8 +1,8 @@
 import type { EventListenerModule } from "@l3dev/discord.js-helpers";
 
 import { PLUGIN_NAME } from "../constants.js";
-import buttonDeleteChannelEvent from "./button-delete-channel.event.js";
 import closeTicketEvent from "./close-ticket.event.js";
+import deleteChannelButtonEvent from "./delete-channel-button.event.js";
 import deleteGuildChannelEvent from "./delete-guild-channel.event.js";
 import openTicketEvent from "./open-ticket.event.js";
 import reopenTicketEvent from "./reopen-ticket.event.js";
@@ -17,7 +17,7 @@ type GetEventListenerModulesConfig = {
 
 export function getEventListenerModules({ logic }: GetEventListenerModulesConfig) {
 	return {
-		[`${PLUGIN_NAME}/button-delete-channel.event.ts`]: buttonDeleteChannelEvent(logic),
+		[`${PLUGIN_NAME}/delete-channel-button.event.ts`]: deleteChannelButtonEvent(logic),
 		[`${PLUGIN_NAME}/close-ticket.event.ts`]: closeTicketEvent(logic),
 		[`${PLUGIN_NAME}/delete-guild-channel.event.ts`]: deleteGuildChannelEvent(logic),
 		[`${PLUGIN_NAME}/open-ticket.event.ts`]: openTicketEvent(logic),
