@@ -18,6 +18,7 @@
 		"strictNullChecks": true,
 		"stripInternal": true,
 		"verbatimModuleSyntax": true,
+		"sourceMap": true,
 		"outDir": "build"
 	},
 	"include": ["src/**/*.js", "src/**/*.ts"],

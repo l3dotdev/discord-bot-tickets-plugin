@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@l3dev/discord.js-helpers':
-        specifier: ^0.4.8
-        version: 0.4.8(discord.js@14.19.1)
+        specifier: ^0.5.0
+        version: 0.5.0(discord.js@14.19.1)
       '@l3dev/logger':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       '@l3dev/result':
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.2.0
+        version: 0.2.0
       discord.js:
         specifier: ^14.19.0
         version: 14.19.1
@@ -25,8 +25,8 @@ importers:
         version: 0.40.1
     devDependencies:
       '@l3dev/drizzle-helpers':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.2.0
+        version: 0.2.0
       '@types/eslint':
         specifier: ^9.6.1
         version: 9.6.1
@@ -393,19 +393,19 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@l3dev/discord.js-helpers@0.4.8':
-    resolution: {integrity: sha512-30kkgzZpn5MG2loZkDfkKBKoRg8Ly9XWSQCPFZpaJJ5BXAitUkBmiS1CM7mUAqsbzdTJg/BtcnXE8GE9RBashw==}
+  '@l3dev/discord.js-helpers@0.5.0':
+    resolution: {integrity: sha512-k5apQLVODDFY3BQ6BklND/6lzJ5G5UkF5fyQ94GUwNaqcaIADxan4x+gCY93G/z+4x5ROk7DJg2aj6E1WF+jVg==}
     peerDependencies:
       discord.js: ^14.19.0
 
-  '@l3dev/drizzle-helpers@0.1.2':
-    resolution: {integrity: sha512-CVW/5d8cYhcUAf0jMue1GRY3LxzwcpqnEqa4qYPiVkISOGm1hGvixeUwHYv/f+w3wBJ7XMzWMn1/ZHPz2VJN5w==}
+  '@l3dev/drizzle-helpers@0.2.0':
+    resolution: {integrity: sha512-/QEL//1s3USIKr94iQuj/fGJUNCYooFkJX2JSz0YGBt0AdSXJep+dVwjzFF3mfZsS0cXirl7GQspEJkZarbJ8w==}
 
-  '@l3dev/logger@0.1.0':
-    resolution: {integrity: sha512-ic3DLZ/7U5ExgwtKv5OasVJIK19GacBYMZbWUJ/r7x5yJnegrMK4hfRn62Bh+UCZFZmXmJ60hPSRdkWCF/PGRQ==}
+  '@l3dev/logger@0.2.0':
+    resolution: {integrity: sha512-30cxM9o4wc4sdI6N38rrZp4Z7yem1IDUjYGLaIRJLv9Js9KDqR9Yirk8jrQSXt9ChelYvIhXIAKIhwjQ5QstZA==}
 
-  '@l3dev/result@0.1.4':
-    resolution: {integrity: sha512-DGzVGmlgfop7CsC1EETbwYvvE3W1t8UdMvRVQFE43HrT49bgtCSPBb0EljmkCOvraN4mSQpeIYyRiWefEcO/Qw==}
+  '@l3dev/result@0.2.0':
+    resolution: {integrity: sha512-V/fMq09GVtDlikznniWIjPGYSU9lyUs2yuAj0FW+MltMRH5xC2zaP0BpRzq7uXez6RjpKU0cBaWvz4DDt40lVQ==}
 
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     resolution: {integrity: sha512-QZHtlVgbAdy2zAqNA9Gu1UpIuI8Xvsd1v8ic6B2pZmeFnFcMWiPLfWXh7TVw4eGEZ/C9TH281KwhVoeQUKbyjw==}
@@ -2280,16 +2280,16 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@l3dev/discord.js-helpers@0.4.8(discord.js@14.19.1)':
+  '@l3dev/discord.js-helpers@0.5.0(discord.js@14.19.1)':
     dependencies:
-      '@l3dev/result': 0.1.4
+      '@l3dev/result': 0.2.0
       discord.js: 14.19.1
       zod: 3.25.56
 
-  '@l3dev/drizzle-helpers@0.1.2':
+  '@l3dev/drizzle-helpers@0.2.0':
     dependencies:
-      '@l3dev/logger': 0.1.0
-      '@l3dev/result': 0.1.4
+      '@l3dev/logger': 0.2.0
+      '@l3dev/result': 0.2.0
       drizzle-orm: 0.40.1
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
@@ -2321,9 +2321,9 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@l3dev/logger@0.1.0': {}
+  '@l3dev/logger@0.2.0': {}
 
-  '@l3dev/result@0.1.4':
+  '@l3dev/result@0.2.0':
     dependencies:
       zod: 3.25.56
 
