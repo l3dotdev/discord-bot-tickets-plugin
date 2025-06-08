@@ -5,7 +5,7 @@ import type { Client, ModalSubmitInteraction, TextBasedChannel } from "discord.j
 import { and, eq, isNull } from "drizzle-orm";
 
 import { Repository } from "./repository.js";
-import { tables, type DbBotTicketChannel } from "../db-schema/index.js";
+import { botTicketTables as tables, type DbBotTicketChannel } from "../db-schema/index.js";
 import * as schema from "../db-schema/index.js";
 import { BotTicketSetupModalCustomId } from "../ids.js";
 import { ticketChannelMessage } from "../messages/ticket-channel.message.js";

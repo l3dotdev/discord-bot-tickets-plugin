@@ -2,7 +2,7 @@ import { ok } from "@l3dev/result";
 import { and, count, eq } from "drizzle-orm";
 
 import { Repository } from "./repository.js";
-import { tables, type DbBotTicketChannel } from "../db-schema/index.js";
+import { botTicketTables as tables, type DbBotTicketChannel } from "../db-schema/index.js";
 
 export enum BotTicketFieldType {
 	Short = "short",

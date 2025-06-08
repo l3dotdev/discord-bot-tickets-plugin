@@ -15,7 +15,7 @@ import { and, count, eq, isNull } from "drizzle-orm";
 import { Repository, type Database } from "./repository.js";
 import type { TicketFields } from "./ticket-fields.js";
 import {
-	tables,
+	botTicketTables as tables,
 	type DbBotTicketChannel,
 	type DbBotTicketFieldAnswerWithField
 } from "../db-schema/index.js";
