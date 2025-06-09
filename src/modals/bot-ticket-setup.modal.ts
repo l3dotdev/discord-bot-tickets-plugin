@@ -26,9 +26,9 @@ export const botTicketSetupModal = defineModal({
 
 		const modalTitleInput = new TextInputBuilder()
 			.setCustomId(BotTicketSetupModalCustomId.ModalTitle)
-			.setLabel("Title of ticket form")
+			.setLabel("Form title")
 			.setStyle(TextInputStyle.Short)
-			.setPlaceholder("Title of the modal when clicking 'Open a ticket'")
+			.setPlaceholder("e.g. Create ticket")
 			.setRequired(true)
 			.setMaxLength(50);
 
