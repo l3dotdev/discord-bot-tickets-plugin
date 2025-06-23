@@ -31,12 +31,12 @@
 	"author": "l3dotdev",
 	"license": "MIT",
 	"peerDependencies": {
-		"@l3dev/discord.js-helpers": ">=0.8.1 <1.0.0",
+		"@l3dev/discord.js-helpers": ">=0.9.1 <1.0.0",
 		"discord.js": ">=14.19.0 <15.0.0",
 		"drizzle-orm": "^0.40.1"
 	},
 	"devDependencies": {
-		"@l3dev/drizzle-helpers": "^0.2.2",
+		"@l3dev/drizzle-helpers": "^0.2.5",
 		"@types/eslint": "^9.6.1",
 		"@types/node": "^22.14.1",
 		"eslint": "^9.24.0",

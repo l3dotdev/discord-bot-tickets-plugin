@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@l3dev/discord.js-helpers':
-        specifier: '>=0.8.1 <1.0.0'
-        version: 0.8.1(discord.js@14.19.1)
+        specifier: '>=0.9.1 <1.0.0'
+        version: 0.9.1(discord.js@14.19.1)
       '@l3dev/logger':
         specifier: ^0.3.0
         version: 0.3.0
@@ -25,7 +25,7 @@ importers:
         version: 0.40.1
     devDependencies:
       '@l3dev/drizzle-helpers':
-        specifier: ^0.2.2
+        specifier: ^0.2.5
         version: 0.2.5
       '@types/eslint':
         specifier: ^9.6.1
@@ -393,8 +393,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@l3dev/discord.js-helpers@0.8.1':
-    resolution: {integrity: sha512-1CyEPNFrOG2OvmRF9PG3VAk78btXslv0Hz3qmUDS9auEb+AOEfn4HQQOmYPY3J5xwlzcbruKw/x+BvlGfAO0nQ==}
+  '@l3dev/discord.js-helpers@0.9.1':
+    resolution: {integrity: sha512-oXVK9A04Rneeg4Ns9C5dtEWHXEGH165nSuHqJ/MWRo27zXUzQb0KudNnuWxuHfRCkAuK/+tc9OwnGuF4aHsGLA==}
     peerDependencies:
       discord.js: ^14.19.0
 
@@ -403,9 +403,6 @@ packages:
 
   '@l3dev/logger@0.3.0':
     resolution: {integrity: sha512-l5F0yfY5iN6lEzo9ooJi458beRML9OHLp87qzD6LpwZKNDX9O8Fe3hwbEzckfNg4a2xe8KX2XrR83Jcz6MUl4A==}
-
-  '@l3dev/result@0.2.1':
-    resolution: {integrity: sha512-CceicCLy9nHlI/Wli6rQWTsxGKmiHqux1w4nNU7cMAFkLAvIBfQLvuyLB4Bd1Kfghd5soZMsQNHWPbYGz8JIXw==}
 
   '@l3dev/result@0.3.1':
     resolution: {integrity: sha512-qDNlCo0+nOJeiVTYJWJL31p8NZluD4Pjq8KveX48czB0tVgODcb1I4s+Iv5Jy1YRGewMgm4QA+t2UnttK0woCA==}
@@ -2283,9 +2280,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@l3dev/discord.js-helpers@0.8.1(discord.js@14.19.1)':
+  '@l3dev/discord.js-helpers@0.9.1(discord.js@14.19.1)':
     dependencies:
-      '@l3dev/result': 0.2.1
+      '@l3dev/result': 0.3.1
       discord.js: 14.19.1
       zod: 3.25.56
 
@@ -2325,10 +2322,6 @@ snapshots:
       - sqlite3
 
   '@l3dev/logger@0.3.0': {}
-
-  '@l3dev/result@0.2.1':
-    dependencies:
-      zod: 3.25.56
 
   '@l3dev/result@0.3.1':
     dependencies:
