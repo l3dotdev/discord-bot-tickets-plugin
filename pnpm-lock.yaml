@@ -12,11 +12,11 @@ importers:
         specifier: '>=0.8.1 <1.0.0'
         version: 0.8.1(discord.js@14.19.1)
       '@l3dev/logger':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.3.0
+        version: 0.3.0
       '@l3dev/result':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.3.1
+        version: 0.3.1
       discord.js:
         specifier: '>=14.19.0 <15.0.0'
         version: 14.19.1
@@ -25,8 +25,8 @@ importers:
         version: 0.40.1
     devDependencies:
       '@l3dev/drizzle-helpers':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.2.2
+        version: 0.2.5
       '@types/eslint':
         specifier: ^9.6.1
         version: 9.6.1
@@ -398,14 +398,17 @@ packages:
     peerDependencies:
       discord.js: ^14.19.0
 
-  '@l3dev/drizzle-helpers@0.2.1':
-    resolution: {integrity: sha512-J28NUwCIZFDC3U8Cyx3djkkl76isSE6MsTOnnLctbkMCE4hqM0MN0PHg2HM9o1DZ0pE9Ieb7Dy3G+vH1r4/AFQ==}
+  '@l3dev/drizzle-helpers@0.2.5':
+    resolution: {integrity: sha512-JTctIqyqwDNW0tzLsxkCDFtbkh4GrKi8MOHnwlEbO11D0HF4bTqiYj5b/ko2m/xu5LN40wq8WH42swF/sz2a2g==}
 
-  '@l3dev/logger@0.2.1':
-    resolution: {integrity: sha512-VG+9q7DaNMNx3mmj0xz1G9G+OGVDi1gcxI9TjIg1aECR8yDL1xQKReeN6HMo6ceRcqM+hwHqM7lQCvl4cEhL/w==}
+  '@l3dev/logger@0.3.0':
+    resolution: {integrity: sha512-l5F0yfY5iN6lEzo9ooJi458beRML9OHLp87qzD6LpwZKNDX9O8Fe3hwbEzckfNg4a2xe8KX2XrR83Jcz6MUl4A==}
 
   '@l3dev/result@0.2.1':
     resolution: {integrity: sha512-CceicCLy9nHlI/Wli6rQWTsxGKmiHqux1w4nNU7cMAFkLAvIBfQLvuyLB4Bd1Kfghd5soZMsQNHWPbYGz8JIXw==}
+
+  '@l3dev/result@0.3.1':
+    resolution: {integrity: sha512-qDNlCo0+nOJeiVTYJWJL31p8NZluD4Pjq8KveX48czB0tVgODcb1I4s+Iv5Jy1YRGewMgm4QA+t2UnttK0woCA==}
 
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     resolution: {integrity: sha512-QZHtlVgbAdy2zAqNA9Gu1UpIuI8Xvsd1v8ic6B2pZmeFnFcMWiPLfWXh7TVw4eGEZ/C9TH281KwhVoeQUKbyjw==}
@@ -2286,10 +2289,10 @@ snapshots:
       discord.js: 14.19.1
       zod: 3.25.56
 
-  '@l3dev/drizzle-helpers@0.2.1':
+  '@l3dev/drizzle-helpers@0.2.5':
     dependencies:
-      '@l3dev/logger': 0.2.1
-      '@l3dev/result': 0.2.1
+      '@l3dev/logger': 0.3.0
+      '@l3dev/result': 0.3.1
       drizzle-orm: 0.40.1
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
@@ -2321,9 +2324,13 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@l3dev/logger@0.2.1': {}
+  '@l3dev/logger@0.3.0': {}
 
   '@l3dev/result@0.2.1':
+    dependencies:
+      zod: 3.25.56
+
+  '@l3dev/result@0.3.1':
     dependencies:
       zod: 3.25.56
 
