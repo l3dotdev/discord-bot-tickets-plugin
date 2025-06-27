@@ -19,3 +19,7 @@ Create a schema file (e.g. `bot-tickets.schema.ts`) in the drizzle schema folder
 ```ts
 export * from "@l3dev/discord-bot-tickets-plugin/db-schema";
 ```
+
+## Discord Usage Documentation
+
+- [Documentation](docs/README.md)
