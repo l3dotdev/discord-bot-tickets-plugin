@@ -14,7 +14,7 @@ Let's setup a channel for moderation tickets!
 First, go to the discord channel you would like to use for tickets. Create one like normal if you don't have one already.
 
 Next, run the `/tickets setup` command. You will be presented with the following modal:  
-![](./images/setup-modal-empty.png)
+![](images/setup-modal-empty.png)
 
 Fill out the available fields and click `Submit` to create the ticket channel. See the diagram below to see what each field corresponds to:  
 ![](./images/setup-modal-diagram.png)
