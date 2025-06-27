@@ -1,5 +1,13 @@
 # Usage guide
 
+- [Setting up a channel](#setting-up-a-channel)
+- [Edit a channel](#edit-a-channel)
+- [Ticket fields](#ticket-fields)
+  - [Add a field to tickets](#add-a-field-to-tickets)
+  - [Removing fields](#removing-fields)
+- [Changing per user ticket limit](#changing-per-user-ticket-limit)
+- [Deleting a channel](#deleting-a-channel)
+
 ## Prerequisites
 
 - A discord server
