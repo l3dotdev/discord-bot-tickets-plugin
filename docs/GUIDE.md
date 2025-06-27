@@ -36,7 +36,7 @@ Still inside the ticket channel, we can use the `/tickets set-mentions` command 
 The command currently supports adding up-to 8 roles or users.
 
 For our example, we'll add the `@moderator` role to the tickets. So all moderators will be able to see the tickets and respond to them:  
-!['set-mentions' command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images//set-mentions-command.png)
+![set-mentions command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images//set-mentions-command.png)
 
 Now when a member creates a ticket the `@moderator` role will be mentioned and everyone with that role will be able to see the ticket.
 
@@ -60,7 +60,7 @@ To edit an existing ticket channel you can use the `/tickets edit` command. You 
 ### Add a field to tickets
 
 To add a field to tickets you can use the `/tickets add-field` command which gives you many options to configure the field:  
-!['add-field' command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images/add-field-command.png)
+![add-field command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images/add-field-command.png)
 
 Once you've added a field, members will now get a prompt to fill out any fields when creating a ticket:  
 ![Create ticket modal with field](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images/ticket-modal-one-field.png)
@@ -74,7 +74,7 @@ You can add up to 5 fields to a ticket channel:
 ### Removing fields
 
 To remove a field from a ticket channel it is as simple as using the `/tickets remove-field` command and providing the name of the field you want to remove:  
-!['remove-field' command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images/remove-field-command.png)
+![remove-field command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images/remove-field-command.png)
 
 If you would like to remove all fields from a ticket channel, use the `/tickets remove-all-fields` command.
 
@@ -85,7 +85,7 @@ If you would like to remove all fields from a ticket channel, use the `/tickets 
 The per-user ticket limit determines how many new tickets a user can open at once. This defaults to `3` tickets per user.
 
 To change the per-user ticket limit for a channel you can use the `/tickets set-per-user-limit` command:  
-!['set-per-user-limit' command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images/per-user-limit-command.png)
+![set-per-user-limit command](https://raw.githubusercontent.com/l3dotdev/discord-bot-tickets-plugin/refs/heads/main/docs/images/per-user-limit-command.png)
 
 ## Deleting a channel
 
