@@ -2,7 +2,7 @@ import { defineEventListener, iHaveDiscordPermissions } from "@l3dev/discord.js-
 import { err, NONE, Result } from "@l3dev/result";
 import { Events, MessageFlags } from "discord.js";
 
-import { ButtonCustomId } from "../ids.js";
+import { ButtonCustomId } from "../constants.js";
 import type { Logic } from "../logic/index.js";
 import { errorMessage } from "../messages/error.message.js";
 

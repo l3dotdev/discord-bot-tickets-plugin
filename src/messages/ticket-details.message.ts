@@ -11,7 +11,7 @@ import type {
 	DbBotTicketChannel,
 	DbBotTicketFieldAnswerWithField
 } from "../db-schema/tickets.schema.js";
-import { ButtonCustomId } from "../ids.js";
+import { ButtonCustomId } from "../constants.js";
 
 export const ticketDetailsMessage = defineMessage({
 	build: (

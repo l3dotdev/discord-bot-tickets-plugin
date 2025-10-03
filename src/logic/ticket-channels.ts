@@ -7,7 +7,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import { Repository } from "./repository.js";
 import { botTicketTables as tables, type DbBotTicketChannel } from "../db-schema/index.js";
 import * as schema from "../db-schema/index.js";
-import { BotTicketSetupModalCustomId } from "../ids.js";
+import { BotTicketSetupModalCustomId } from "../constants.js";
 import { ticketChannelMessage } from "../messages/ticket-channel.message.js";
 
 export class TicketChannels extends Repository {

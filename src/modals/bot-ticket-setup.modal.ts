@@ -2,7 +2,7 @@ import { defineModal, okModal } from "@l3dev/discord.js-helpers";
 import { ActionRowBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 
 import type { DbBotTicketChannel } from "../db-schema/tickets.schema.js";
-import { BotTicketSetupModalCustomId, ModalCustomId } from "../ids.js";
+import { BotTicketSetupModalCustomId, ModalCustomId } from "../constants.js";
 
 export const botTicketSetupModal = defineModal({
 	build: (builder, ticketChannel?: DbBotTicketChannel) => {

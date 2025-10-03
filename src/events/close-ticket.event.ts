@@ -9,7 +9,7 @@ import {
 	TextInputStyle
 } from "discord.js";
 
-import { ButtonCustomId, CloseBotTicketModalCustomId, ModalCustomId } from "../ids.js";
+import { ButtonCustomId, CloseBotTicketModalCustomId, ModalCustomId } from "../constants.js";
 import type { Logic } from "../logic/index.js";
 import { errorMessage } from "../messages/error.message.js";
 

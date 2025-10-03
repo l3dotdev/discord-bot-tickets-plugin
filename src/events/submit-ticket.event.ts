@@ -2,7 +2,7 @@ import { defineEventListener, iHaveDiscordPermissions } from "@l3dev/discord.js-
 import { NONE, Result } from "@l3dev/result";
 import { Events, MessageFlags } from "discord.js";
 
-import { ModalCustomId } from "../ids.js";
+import { ModalCustomId } from "../constants.js";
 import type { Logic } from "../logic/index.js";
 import { errorMessage } from "../messages/error.message.js";
 import { openTicketReplyMessage } from "../messages/open-ticket-reply.message.js";

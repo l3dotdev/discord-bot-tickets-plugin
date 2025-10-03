@@ -1,7 +1,7 @@
 import { defineMessage, okReply } from "@l3dev/discord.js-helpers";
 import { ButtonBuilder, ButtonStyle, ContainerBuilder, MessageFlags } from "discord.js";
 
-import { ButtonCustomId } from "../ids.js";
+import { ButtonCustomId } from "../constants.js";
 
 export const closedTicketMessage = defineMessage({
 	build: (closedById: string, reason?: string) => {

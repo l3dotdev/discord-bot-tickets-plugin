@@ -19,7 +19,7 @@ import {
 	type DbBotTicketChannel,
 	type DbBotTicketFieldAnswerWithField
 } from "../db-schema/index.js";
-import { CloseBotTicketModalCustomId } from "../ids.js";
+import { CloseBotTicketModalCustomId } from "../constants.js";
 import { closedTicketMessage } from "../messages/closed-ticket.message.js";
 import { ticketDetailsMessage } from "../messages/ticket-details.message.js";
 
