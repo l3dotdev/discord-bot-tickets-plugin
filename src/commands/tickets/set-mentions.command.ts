@@ -73,7 +73,7 @@ export default function ({ ticketChannels }: Logic) {
 
 				return await Result.fromPromise(
 					interaction.reply({
-						content: `:white_check_mark: Successfully set mentions to \`[${mentions.join(", ")}]\` for the ticket channel`,
+						content: `:white_check_mark: Successfully set mentions to: [${mentions.join(", ")}]`,
 						flags: MessageFlags.Ephemeral
 					})
 				);
