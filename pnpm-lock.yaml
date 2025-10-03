@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@l3dev/discord.js-helpers':
-        specifier: '>=0.9.1 <1.0.0'
-        version: 0.9.1(discord.js@14.19.1)
+        specifier: '>=0.10.1 <1.0.0'
+        version: 0.10.1(discord.js@14.19.1)
       '@l3dev/logger':
-        specifier: ^0.3.0
-        version: 0.3.0
-      '@l3dev/result':
         specifier: ^0.3.1
         version: 0.3.1
+      '@l3dev/result':
+        specifier: ^0.4.0
+        version: 0.4.0
       discord.js:
         specifier: '>=14.19.0 <15.0.0'
         version: 14.19.1
@@ -393,19 +393,22 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@l3dev/discord.js-helpers@0.9.1':
-    resolution: {integrity: sha512-oXVK9A04Rneeg4Ns9C5dtEWHXEGH165nSuHqJ/MWRo27zXUzQb0KudNnuWxuHfRCkAuK/+tc9OwnGuF4aHsGLA==}
+  '@l3dev/discord.js-helpers@0.10.1':
+    resolution: {integrity: sha512-ORU0JRICB5WUkS8YV9SqreOVl6Qe1f2uqVB5ccX+lLKyuBnSQwX8fY1UK3DKAbERqVZv3Kl426Ilfxe4MicsXw==}
     peerDependencies:
       discord.js: ^14.19.0
 
   '@l3dev/drizzle-helpers@0.2.5':
     resolution: {integrity: sha512-JTctIqyqwDNW0tzLsxkCDFtbkh4GrKi8MOHnwlEbO11D0HF4bTqiYj5b/ko2m/xu5LN40wq8WH42swF/sz2a2g==}
 
-  '@l3dev/logger@0.3.0':
-    resolution: {integrity: sha512-l5F0yfY5iN6lEzo9ooJi458beRML9OHLp87qzD6LpwZKNDX9O8Fe3hwbEzckfNg4a2xe8KX2XrR83Jcz6MUl4A==}
+  '@l3dev/logger@0.3.1':
+    resolution: {integrity: sha512-QiBr05GTFk8DGY99+JVSx6DBT8mWNUxThez6Mk9oOR4zcpP/mWzVQ+a5z2a1hEXIuVjCrm2emQxn6avcuOFt7g==}
 
   '@l3dev/result@0.3.1':
     resolution: {integrity: sha512-qDNlCo0+nOJeiVTYJWJL31p8NZluD4Pjq8KveX48czB0tVgODcb1I4s+Iv5Jy1YRGewMgm4QA+t2UnttK0woCA==}
+
+  '@l3dev/result@0.4.0':
+    resolution: {integrity: sha512-yGqy34fuQqYvMg6kE+vdodAkjKTOuLQYzy684ZkmJOps7/0kfjZcPEjltcUzAIl//HCiyaxMlP2tle2vbYV96w==}
 
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     resolution: {integrity: sha512-QZHtlVgbAdy2zAqNA9Gu1UpIuI8Xvsd1v8ic6B2pZmeFnFcMWiPLfWXh7TVw4eGEZ/C9TH281KwhVoeQUKbyjw==}
@@ -2280,15 +2283,15 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@l3dev/discord.js-helpers@0.9.1(discord.js@14.19.1)':
+  '@l3dev/discord.js-helpers@0.10.1(discord.js@14.19.1)':
     dependencies:
-      '@l3dev/result': 0.3.1
+      '@l3dev/result': 0.4.0
       discord.js: 14.19.1
       zod: 3.25.56
 
   '@l3dev/drizzle-helpers@0.2.5':
     dependencies:
-      '@l3dev/logger': 0.3.0
+      '@l3dev/logger': 0.3.1
       '@l3dev/result': 0.3.1
       drizzle-orm: 0.40.1
     transitivePeerDependencies:
@@ -2321,9 +2324,13 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@l3dev/logger@0.3.0': {}
+  '@l3dev/logger@0.3.1': {}
 
   '@l3dev/result@0.3.1':
+    dependencies:
+      zod: 3.25.56
+
+  '@l3dev/result@0.4.0':
     dependencies:
       zod: 3.25.56
 
@@ -3012,7 +3019,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.31.0(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@9.25.1(jiti@2.4.2)))(eslint@9.25.1(jiti@2.4.2)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.31.0(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.25.1(jiti@2.4.2)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -3034,7 +3041,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.25.1(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.31.0(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@9.25.1(jiti@2.4.2)))(eslint@9.25.1(jiti@2.4.2))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.31.0(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.25.1(jiti@2.4.2))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
