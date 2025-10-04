@@ -284,7 +284,7 @@ export class TicketChannels extends Repository {
 		);
 
 		let modalTitle = interaction.fields.getTextInputValue(BotTicketSetupModalCustomId.ModalTitle);
-		if (!modalTitle) modalTitle = "Ticket form";
+		if (!modalTitle) modalTitle = "Create ticket";
 
 		let ticketName = interaction.fields.getTextInputValue(BotTicketSetupModalCustomId.TicketName);
 		if (!ticketName) ticketName = "ticket";
