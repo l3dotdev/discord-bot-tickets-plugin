@@ -42,6 +42,14 @@ export class TicketChannels extends Repository {
 	}
 
 	async createChannel(interaction: ModalSubmitInteraction, channel: TextBasedChannel) {
+		const {
+			channelMessageHeading,
+			channelMessageDescription,
+			modalTitle,
+			ticketName,
+			ticketDescription
+		} = this.extractFields(interaction);
+
 		const tx = await this.db.inlineTransaction();
 
 		const channelResult = await this.db.safeExecute(
@@ -50,21 +58,11 @@ export class TicketChannels extends Repository {
 				.insert(tables.botTicketChannels)
 				.values({
 					discordChannelId: channel.id,
-					channelMessageHeading: interaction.fields.getTextInputValue(
-						BotTicketSetupModalCustomId.Heading
-					),
-					channelMessageDescription: interaction.fields.getTextInputValue(
-						BotTicketSetupModalCustomId.Description
-					),
-					modalTitle: interaction.fields.getTextInputValue(BotTicketSetupModalCustomId.ModalTitle),
-					ticketName: interaction.fields
-						.getTextInputValue(BotTicketSetupModalCustomId.TicketName)
-						.trim()
-						.toLowerCase()
-						.replaceAll(" ", "-"),
-					ticketDescription: interaction.fields.getTextInputValue(
-						BotTicketSetupModalCustomId.TicketDescription
-					),
+					channelMessageHeading,
+					channelMessageDescription,
+					modalTitle,
+					ticketName,
+					ticketDescription,
 					limitPerUser: 3
 				})
 				.returning()
@@ -88,6 +86,14 @@ export class TicketChannels extends Repository {
 	}
 
 	async editChannel(interaction: ModalSubmitInteraction, ticketChannel: DbBotTicketChannel) {
+		const {
+			channelMessageHeading,
+			channelMessageDescription,
+			modalTitle,
+			ticketName,
+			ticketDescription
+		} = this.extractFields(interaction);
+
 		const tx = await this.db.inlineTransaction();
 
 		const updateChannelResult = await this.db.safeExecute(
@@ -95,21 +101,11 @@ export class TicketChannels extends Repository {
 			tx
 				.update(tables.botTicketChannels)
 				.set({
-					channelMessageHeading: interaction.fields.getTextInputValue(
-						BotTicketSetupModalCustomId.Heading
-					),
-					channelMessageDescription: interaction.fields.getTextInputValue(
-						BotTicketSetupModalCustomId.Description
-					),
-					modalTitle: interaction.fields.getTextInputValue(BotTicketSetupModalCustomId.ModalTitle),
-					ticketName: interaction.fields
-						.getTextInputValue(BotTicketSetupModalCustomId.TicketName)
-						.trim()
-						.toLowerCase()
-						.replaceAll(" ", "-"),
-					ticketDescription: interaction.fields.getTextInputValue(
-						BotTicketSetupModalCustomId.TicketDescription
-					)
+					channelMessageHeading,
+					channelMessageDescription,
+					modalTitle,
+					ticketName,
+					ticketDescription
 				})
 				.where(eq(tables.botTicketChannels.id, ticketChannel.id))
 				.returning()
@@ -276,5 +272,34 @@ export class TicketChannels extends Repository {
 				.set({ ticketMentions: mentions })
 				.where(eq(tables.botTicketChannels.id, ticketChannel.id))
 		);
+	}
+
+	private extractFields(interaction: ModalSubmitInteraction) {
+		const channelMessageHeading = interaction.fields.getTextInputValue(
+			BotTicketSetupModalCustomId.Heading
+		);
+
+		const channelMessageDescription = interaction.fields.getTextInputValue(
+			BotTicketSetupModalCustomId.Description
+		);
+
+		let modalTitle = interaction.fields.getTextInputValue(BotTicketSetupModalCustomId.ModalTitle);
+		if (!modalTitle) modalTitle = "Ticket form";
+
+		let ticketName = interaction.fields.getTextInputValue(BotTicketSetupModalCustomId.TicketName);
+		if (!ticketName) ticketName = "ticket";
+		ticketName = ticketName.trim().toLowerCase().replaceAll(" ", "-");
+
+		const ticketDescription = interaction.fields.getTextInputValue(
+			BotTicketSetupModalCustomId.TicketDescription
+		);
+
+		return {
+			channelMessageHeading,
+			channelMessageDescription,
+			modalTitle,
+			ticketName,
+			ticketDescription
+		};
 	}
 }

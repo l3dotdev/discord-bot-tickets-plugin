@@ -26,25 +26,26 @@ export const botTicketSetupModal = defineModal({
 
 		const modalTitleInput = new TextInputBuilder()
 			.setCustomId(BotTicketSetupModalCustomId.ModalTitle)
-			.setLabel("Form title")
+			.setLabel("Form title (optional)")
 			.setStyle(TextInputStyle.Short)
 			.setPlaceholder("e.g. Create ticket")
-			.setRequired(true)
 			.setMaxLength(50);
 
 		const ticketNameInput = new TextInputBuilder()
 			.setCustomId(BotTicketSetupModalCustomId.TicketName)
-			.setLabel("Name of a ticket thread")
+			.setLabel("Ticket thread prefix (optional)")
 			.setStyle(TextInputStyle.Short)
-			.setPlaceholder("mod-ticket")
+			.setPlaceholder("e.g. mod-ticket")
+			.setValue("ticket")
 			.setRequired(false)
 			.setMaxLength(50);
 
 		const ticketDescriptionInput = new TextInputBuilder()
 			.setCustomId(BotTicketSetupModalCustomId.TicketDescription)
-			.setLabel("Description in ticket thread")
+			.setLabel("Description in ticket thread (optional)")
 			.setStyle(TextInputStyle.Paragraph)
 			.setPlaceholder("Added to the ticket thread message when a ticket is opened")
+			.setValue("{user} Thank you for opening a ticket!")
 			.setRequired(false)
 			.setMaxLength(1000);
 
