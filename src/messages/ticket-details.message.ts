@@ -4,7 +4,8 @@ import {
 	ButtonStyle,
 	ContainerBuilder,
 	MessageFlags,
-	SeparatorSpacingSize
+	SeparatorSpacingSize,
+	type User
 } from "discord.js";
 
 import type {
@@ -12,18 +13,19 @@ import type {
 	DbBotTicketFieldAnswerWithField
 } from "../db-schema/tickets.schema.js";
 import { ButtonCustomId } from "../constants.js";
+import { resolveTemplate } from "../logic/templates.js";
 
 export const ticketDetailsMessage = defineMessage({
 	build: (
 		ticketId: number,
-		userId: string,
+		user: User,
 		ticketChannel: DbBotTicketChannel,
 		answers: DbBotTicketFieldAnswerWithField[]
 	) => {
 		const container = new ContainerBuilder()
 			.addTextDisplayComponents((textDisplay) =>
 				textDisplay.setContent(`## Ticket #${ticketId}
-<@${userId}> Thank you for opening a ticket!${ticketChannel.ticketDescription ? `\n\n${ticketChannel.ticketDescription}` : ""}${ticketChannel.ticketMentions.length ? `\n\n||${ticketChannel.ticketMentions.join(" ")}||` : ""}`)
+${ticketChannel.ticketDescription ? resolveTemplate(ticketChannel.ticketDescription, user) : `<@${user.id}> Thank you for opening a ticket!`}${ticketChannel.ticketMentions.length ? `\n\n||${ticketChannel.ticketMentions.join(" ")}||` : ""}`)
 			)
 			.addSeparatorComponents((separator) =>
 				separator.setDivider(true).setSpacing(SeparatorSpacingSize.Small)

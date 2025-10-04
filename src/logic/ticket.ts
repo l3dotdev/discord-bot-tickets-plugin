@@ -22,6 +22,7 @@ import {
 import { CloseBotTicketModalCustomId } from "../constants.js";
 import { closedTicketMessage } from "../messages/closed-ticket.message.js";
 import { ticketDetailsMessage } from "../messages/ticket-details.message.js";
+import { resolveTemplate } from "./templates.js";
 
 export class Tickets extends Repository {
 	constructor(
@@ -138,7 +139,7 @@ export class Tickets extends Repository {
 			{ onError: { type: "CREATE_BOT_TICKET_THREAD" } },
 			channel.threads.create({
 				type: ChannelType.PrivateThread,
-				name: `${ticketChannel.ticketName ? ticketChannel.ticketName : "ticket"}-${ticket.id}`,
+				name: `${ticketChannel.ticketName ? resolveTemplate(ticketChannel.ticketName, interaction.user) : "ticket"}-${ticket.id}`,
 				reason: `Create ticket thread for ticket ${ticket.id}`,
 				autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
 				invitable: false
@@ -166,7 +167,7 @@ export class Tickets extends Repository {
 
 		const sendStartMessageResult = await Result.fromPromise(
 			thread.send({
-				...ticketDetailsMessage.build(ticket.id, interaction.user.id, ticketChannel, answers).value
+				...ticketDetailsMessage.build(ticket.id, interaction.user, ticketChannel, answers).value
 			})
 		);
 		if (!sendStartMessageResult.ok) {

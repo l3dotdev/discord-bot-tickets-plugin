@@ -288,7 +288,12 @@ export class TicketChannels extends Repository {
 
 		let ticketName = interaction.fields.getTextInputValue(BotTicketSetupModalCustomId.TicketName);
 		if (!ticketName) ticketName = "ticket";
-		ticketName = ticketName.trim().toLowerCase().replaceAll(" ", "-");
+		ticketName = ticketName
+			.trim()
+			.toLowerCase()
+			.replaceAll(/\s+/, " ")
+			.replaceAll(" ", "-")
+			.replaceAll("}-{", "} {");
 
 		const ticketDescription = interaction.fields.getTextInputValue(
 			BotTicketSetupModalCustomId.TicketDescription
