@@ -25,8 +25,8 @@ importers:
         version: 0.40.1
     devDependencies:
       '@l3dev/drizzle-helpers':
-        specifier: ^0.2.5
-        version: 0.2.5
+        specifier: ^0.2.6
+        version: 0.2.6
       '@types/eslint':
         specifier: ^9.6.1
         version: 9.6.1
@@ -398,14 +398,11 @@ packages:
     peerDependencies:
       discord.js: ^14.19.0
 
-  '@l3dev/drizzle-helpers@0.2.5':
-    resolution: {integrity: sha512-JTctIqyqwDNW0tzLsxkCDFtbkh4GrKi8MOHnwlEbO11D0HF4bTqiYj5b/ko2m/xu5LN40wq8WH42swF/sz2a2g==}
+  '@l3dev/drizzle-helpers@0.2.6':
+    resolution: {integrity: sha512-pHV9O0PrG9/R4SHBQrpIGZ75psEHC7onU+VpCmKWf7LAic5Hdd/kdu8BLoUmpcyWTJ2KRAmhB8a1kBpe23d6Uw==}
 
   '@l3dev/logger@0.3.1':
     resolution: {integrity: sha512-QiBr05GTFk8DGY99+JVSx6DBT8mWNUxThez6Mk9oOR4zcpP/mWzVQ+a5z2a1hEXIuVjCrm2emQxn6avcuOFt7g==}
-
-  '@l3dev/result@0.3.1':
-    resolution: {integrity: sha512-qDNlCo0+nOJeiVTYJWJL31p8NZluD4Pjq8KveX48czB0tVgODcb1I4s+Iv5Jy1YRGewMgm4QA+t2UnttK0woCA==}
 
   '@l3dev/result@0.4.0':
     resolution: {integrity: sha512-yGqy34fuQqYvMg6kE+vdodAkjKTOuLQYzy684ZkmJOps7/0kfjZcPEjltcUzAIl//HCiyaxMlP2tle2vbYV96w==}
@@ -1020,6 +1017,98 @@ packages:
       '@types/pg':
         optional: true
       '@types/sql.js':
+        optional: true
+      '@vercel/postgres':
+        optional: true
+      '@xata.io/client':
+        optional: true
+      better-sqlite3:
+        optional: true
+      bun-types:
+        optional: true
+      expo-sqlite:
+        optional: true
+      gel:
+        optional: true
+      knex:
+        optional: true
+      kysely:
+        optional: true
+      mysql2:
+        optional: true
+      pg:
+        optional: true
+      postgres:
+        optional: true
+      prisma:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+
+  drizzle-orm@0.44.6:
+    resolution: {integrity: sha512-uy6uarrrEOc9K1u5/uhBFJbdF5VJ5xQ/Yzbecw3eAYOunv5FDeYkR2m8iitocdHBOHbvorviKOW5GVw0U1j4LQ==}
+    peerDependencies:
+      '@aws-sdk/client-rds-data': '>=3'
+      '@cloudflare/workers-types': '>=4'
+      '@electric-sql/pglite': '>=0.2.0'
+      '@libsql/client': '>=0.10.0'
+      '@libsql/client-wasm': '>=0.10.0'
+      '@neondatabase/serverless': '>=0.10.0'
+      '@op-engineering/op-sqlite': '>=2'
+      '@opentelemetry/api': ^1.4.1
+      '@planetscale/database': '>=1.13'
+      '@prisma/client': '*'
+      '@tidbcloud/serverless': '*'
+      '@types/better-sqlite3': '*'
+      '@types/pg': '*'
+      '@types/sql.js': '*'
+      '@upstash/redis': '>=1.34.7'
+      '@vercel/postgres': '>=0.8.0'
+      '@xata.io/client': '*'
+      better-sqlite3: '>=7'
+      bun-types: '*'
+      expo-sqlite: '>=14.0.0'
+      gel: '>=2'
+      knex: '*'
+      kysely: '*'
+      mysql2: '>=2'
+      pg: '>=8'
+      postgres: '>=3'
+      prisma: '*'
+      sql.js: '>=1'
+      sqlite3: '>=5'
+    peerDependenciesMeta:
+      '@aws-sdk/client-rds-data':
+        optional: true
+      '@cloudflare/workers-types':
+        optional: true
+      '@electric-sql/pglite':
+        optional: true
+      '@libsql/client':
+        optional: true
+      '@libsql/client-wasm':
+        optional: true
+      '@neondatabase/serverless':
+        optional: true
+      '@op-engineering/op-sqlite':
+        optional: true
+      '@opentelemetry/api':
+        optional: true
+      '@planetscale/database':
+        optional: true
+      '@prisma/client':
+        optional: true
+      '@tidbcloud/serverless':
+        optional: true
+      '@types/better-sqlite3':
+        optional: true
+      '@types/pg':
+        optional: true
+      '@types/sql.js':
+        optional: true
+      '@upstash/redis':
         optional: true
       '@vercel/postgres':
         optional: true
@@ -2289,11 +2378,11 @@ snapshots:
       discord.js: 14.19.1
       zod: 3.25.56
 
-  '@l3dev/drizzle-helpers@0.2.5':
+  '@l3dev/drizzle-helpers@0.2.6':
     dependencies:
       '@l3dev/logger': 0.3.1
-      '@l3dev/result': 0.3.1
-      drizzle-orm: 0.40.1
+      '@l3dev/result': 0.4.0
+      drizzle-orm: 0.44.6
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@cloudflare/workers-types'
@@ -2309,6 +2398,7 @@ snapshots:
       - '@types/better-sqlite3'
       - '@types/pg'
       - '@types/sql.js'
+      - '@upstash/redis'
       - '@vercel/postgres'
       - '@xata.io/client'
       - better-sqlite3
@@ -2325,10 +2415,6 @@ snapshots:
       - sqlite3
 
   '@l3dev/logger@0.3.1': {}
-
-  '@l3dev/result@0.3.1':
-    dependencies:
-      zod: 3.25.56
 
   '@l3dev/result@0.4.0':
     dependencies:
@@ -2876,6 +2962,8 @@ snapshots:
       esutils: 2.0.3
 
   drizzle-orm@0.40.1: {}
+
+  drizzle-orm@0.44.6: {}
 
   dunder-proto@1.0.1:
     dependencies:
