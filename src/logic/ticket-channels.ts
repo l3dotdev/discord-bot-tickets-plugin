@@ -301,7 +301,7 @@ export class TicketChannels extends Repository {
 		ticketName = ticketName
 			.trim()
 			.toLowerCase()
-			.replaceAll(/\s+/, " ")
+			.replaceAll(/\s+/g, " ")
 			.replaceAll(" ", "-")
 			.replaceAll("}-{", "} {");
 
