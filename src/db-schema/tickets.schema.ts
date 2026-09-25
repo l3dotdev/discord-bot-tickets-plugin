@@ -19,6 +19,7 @@ export const botTicketChannels = pgTable("bot_ticket_channels", {
 	ticketName: text("ticket_name").notNull(),
 	ticketDescription: text("ticket_description").notNull(),
 	ticketMentions: text("ticket_mentions").array().notNull().default([]),
+	ticketThreadVisibility: text("ticket_thread_visibility").notNull().default("private"),
 
 	limitPerUser: integer("limit_per_user").notNull().default(3),
 

@@ -5,9 +5,9 @@ import type { Client, ModalSubmitInteraction, TextBasedChannel } from "discord.j
 import { and, eq, isNull } from "drizzle-orm";
 
 import { Repository } from "./repository.js";
+import { BotTicketSetupModalCustomId } from "../constants.js";
 import { botTicketTables as tables, type DbBotTicketChannel } from "../db-schema/index.js";
 import * as schema from "../db-schema/index.js";
-import { BotTicketSetupModalCustomId } from "../constants.js";
 import { ticketChannelMessage } from "../messages/ticket-channel.message.js";
 
 export class TicketChannels extends Repository {
@@ -260,6 +260,16 @@ export class TicketChannels extends Repository {
 			this.db
 				.update(tables.botTicketChannels)
 				.set({ limitPerUser: limit })
+				.where(eq(tables.botTicketChannels.id, ticketChannel.id))
+		);
+	}
+
+	setChannelVisibility(ticketChannel: DbBotTicketChannel, visibility: "public" | "private") {
+		return this.db.safeExecute(
+			"SET_BOT_TICKET_CHANNEL_TICKET_VISIBILITY",
+			this.db
+				.update(tables.botTicketChannels)
+				.set({ ticketThreadVisibility: visibility })
 				.where(eq(tables.botTicketChannels.id, ticketChannel.id))
 		);
 	}

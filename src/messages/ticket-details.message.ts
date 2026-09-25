@@ -8,11 +8,11 @@ import {
 	type User
 } from "discord.js";
 
+import { ButtonCustomId } from "../constants.js";
 import type {
 	DbBotTicketChannel,
 	DbBotTicketFieldAnswerWithField
 } from "../db-schema/tickets.schema.js";
-import { ButtonCustomId } from "../constants.js";
 import { resolveTemplate } from "../logic/templates.js";
 
 export const ticketDetailsMessage = defineMessage({

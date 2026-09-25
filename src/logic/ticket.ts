@@ -13,16 +13,16 @@ import {
 import { and, count, eq, isNull } from "drizzle-orm";
 
 import { Repository, type Database } from "./repository.js";
+import { resolveTemplate } from "./templates.js";
 import type { TicketFields } from "./ticket-fields.js";
+import { CloseBotTicketModalCustomId } from "../constants.js";
 import {
 	botTicketTables as tables,
 	type DbBotTicketChannel,
 	type DbBotTicketFieldAnswerWithField
 } from "../db-schema/index.js";
-import { CloseBotTicketModalCustomId } from "../constants.js";
 import { closedTicketMessage } from "../messages/closed-ticket.message.js";
 import { ticketDetailsMessage } from "../messages/ticket-details.message.js";
-import { resolveTemplate } from "./templates.js";
 
 export class Tickets extends Repository {
 	constructor(
@@ -138,7 +138,10 @@ export class Tickets extends Repository {
 		const createThreadResult = await Result.fromPromise(
 			{ onError: { type: "CREATE_BOT_TICKET_THREAD" } },
 			channel.threads.create({
-				type: ChannelType.PrivateThread,
+				type:
+					ticketChannel.ticketThreadVisibility === "public"
+						? ChannelType.PublicThread
+						: ChannelType.PrivateThread,
 				name: `${ticketChannel.ticketName ? resolveTemplate(ticketChannel.ticketName, interaction.user) : "ticket"}-${ticket.id}`,
 				reason: `Create ticket thread for ticket ${ticket.id}`,
 				autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,

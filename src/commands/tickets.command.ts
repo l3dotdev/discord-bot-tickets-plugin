@@ -16,6 +16,7 @@ import removeAllFieldsCommand from "./tickets/remove-all-fields.command.js";
 import removeFieldCommand from "./tickets/remove-field.command.js";
 import setMentionsCommand from "./tickets/set-mentions.command.js";
 import setPerUserLimitCommand from "./tickets/set-per-user-limit.command.js";
+import setTicketVisibilityCommand from "./tickets/set-ticket-visibility.command.js";
 import setupCommand from "./tickets/setup.command.js";
 import type { Logic } from "../logic/index.js";
 import { errorMessage } from "../messages/error.message.js";
@@ -35,6 +36,8 @@ export default function (commandExecutor: CommandExecutor, logic: Logic) {
 				[`${PLUGIN_NAME}/tickets/remove-field.command.ts`]: removeFieldCommand(logic),
 				[`${PLUGIN_NAME}/tickets/set-mentions.command.ts`]: setMentionsCommand(logic),
 				[`${PLUGIN_NAME}/tickets/set-per-user-limit.command.ts`]: setPerUserLimitCommand(logic),
+				[`${PLUGIN_NAME}/tickets/set-ticket-visibility.command.ts`]:
+					setTicketVisibilityCommand(logic),
 				[`${PLUGIN_NAME}/tickets/setup.command.ts`]: setupCommand(logic)
 			} as unknown as Record<string, T>;
 		},
