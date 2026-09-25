@@ -154,6 +154,32 @@ export class Tickets extends Repository {
 
 		const thread = createThreadResult.value;
 
+		if (ticketChannel.ticketThreadVisibility === "public") {
+			const starterMessageResult = await Result.fromPromise(
+				{ onError: { type: "FETCH_STARTER_MESSAGE" } },
+				thread.fetchStarterMessage()
+			);
+			if (!starterMessageResult.ok) {
+				return await tx.rollback(async () => {
+					await thread.delete();
+					return starterMessageResult;
+				});
+			}
+
+			if (starterMessageResult.value) {
+				const deleteStarterMessageResult = await Result.fromPromise(
+					{ onError: { type: "DELETE_STARTER_MESSAGE" } },
+					starterMessageResult.value.delete()
+				);
+				if (!deleteStarterMessageResult.ok) {
+					return await tx.rollback(async () => {
+						await thread.delete();
+						return deleteStarterMessageResult;
+					});
+				}
+			}
+		}
+
 		const updateTicketResult = await this.db.safeExecute(
 			"UPDATE_BOT_TICKET_WITH_THREAD",
 			tx
