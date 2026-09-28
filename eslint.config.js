@@ -1,52 +1,38 @@
-import eslint from "@eslint/js";
+import js from "@eslint/js";
 import prettier from "eslint-config-prettier";
-import importPlugin from "eslint-plugin-import";
 import globals from "globals";
-import tseslint from "typescript-eslint";
-import "eslint-import-resolver-typescript";
+import ts from "typescript-eslint";
+import importX from "eslint-plugin-import-x";
+import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-export default tseslint.config(
-	{
-		ignores: ["eslint.config.js", "vite.config.ts", "**/build/", "**/dist/"]
-	},
-	eslint.configs.recommended,
-	...tseslint.configs.recommended,
+export default defineConfig(
+	globalIgnores(["eslint.config.js", "vite.config.ts", "**/build/", "**/dist/"]),
+	js.configs.recommended,
+	ts.configs.recommended,
+	importX.flatConfigs.recommended,
+	importX.flatConfigs.typescript,
 	prettier,
-	importPlugin.flatConfigs.recommended,
 	{
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				...globals.node,
-				App: "readonly"
+				...globals.node
 			}
-		}
-	},
-	{
+		},
 		settings: {
 			"import/parsers": {
 				"@typescript-eslint/parser": [".ts"]
 			},
-			"import/resolver": {
-				typescript: {
-					project: import.meta.dirname + "/*/tsconfig.json"
-				},
-				node: {
-					extensions: [".js", ".jsx", ".ts", ".tsx"]
-				}
-			}
-		}
-	},
-	{
+			"import-x/resolver-next": [
+				createTypeScriptImportResolver({
+					project: "tsconfig.json"
+				})
+			]
+		},
 		rules: {
-			"import/no-unresolved": [
-				"error",
-				{
-					ignore: ["^\\$app/.+", "^\\$env/.+"]
-				}
-			],
-			"import/no-duplicates": "off",
-			"import/order": [
+			"import-x/no-duplicates": "off",
+			"import-x/order": [
 				"warn",
 				{
 					groups: ["builtin", "external", "internal", ["sibling", "parent"], "index"],
@@ -54,21 +40,7 @@ export default tseslint.config(
 						order: "asc",
 						caseInsensitive: true
 					},
-					"newlines-between": "always",
-					pathGroups: [
-						{
-							pattern: "\$**",
-							group: "internal"
-						},
-						{
-							pattern: "$env/**",
-							group: "internal"
-						},
-						{
-							pattern: "$app/**",
-							group: "internal"
-						}
-					]
+					"newlines-between": "always"
 				}
 			],
 			"@typescript-eslint/no-explicit-any": "off",
@@ -80,12 +52,6 @@ export default tseslint.config(
 					caughtErrorsIgnorePattern: "^_"
 				}
 			]
-		}
-	},
-	{
-		files: ["discord.js-helpers/**/*.ts", "result/**/*.ts", "api-result/**/*.ts"],
-		rules: {
-			"import/extensions": ["error", "always", { ts: "never" }]
 		}
 	}
 );
