@@ -37,8 +37,7 @@ export default function ({ ticketChannels }: Logic) {
 				}
 
 				const visibility = interaction.options.getString("visibility", true) as
-					| "public"
-					| "private";
+					"public" | "private";
 
 				const permissionsResult = await iHaveDiscordPermissions(
 					[visibility === "public" ? "CreatePublicThreads" : "CreatePrivateThreads"],
