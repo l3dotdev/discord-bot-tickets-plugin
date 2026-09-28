@@ -79,7 +79,8 @@ export async function openTicketFlow({
 		const replyErrorResult = await Result.fromPromise(
 			{ onError: { type: "REPLY_FAILED_TO_DEFER" } },
 			interaction.followUp({
-				...errorMessage.build("Failed to respond").value
+				...errorMessage.build("Failed to respond").value,
+				flags: MessageFlags.Ephemeral
 			})
 		);
 		return Result.all(deferResult, replyErrorResult);
@@ -89,14 +90,13 @@ export async function openTicketFlow({
 	if (!checkTicketLimitResult.ok) {
 		const replyErrorResult = await Result.fromPromise(
 			{ onError: { type: "REPLY_FAILED_TO_CHECK_TICKET_LIMIT" } },
-			interaction.editReply({
+			interaction.followUp({
 				...errorMessage.build("Failed to create ticket, please try again later").value
 			})
 		);
 		return Result.all(checkTicketLimitResult, replyErrorResult);
 	}
 
-	let followUp = false;
 	if (checkTicketLimitResult.value.exceeded) {
 		const threadLinks = checkTicketLimitResult.value.threadIds
 			.map((threadId) => `https://discord.com/channels/${interaction.guildId}/${threadId}`)
@@ -113,21 +113,21 @@ export async function openTicketFlow({
 		if (hasThreadsPermission.ok) {
 			const suggestionResult = await Result.fromPromise(
 				{ onError: { type: "REPLY_MAX_ACTIVE_TICKETS_PER_USER_SUGGESTION" } },
-				interaction.editReply({
-					content: `You have more than ${ticketChannel.limitPerUser} open ticket(s), you may want to close some before opening more. You're open tickets: ${threadLinks}`
+				interaction.followUp({
+					content: `You have more than ${ticketChannel.limitPerUser} open ticket(s), you may want to close some before opening more. You're open tickets: ${threadLinks}`,
+					flags: MessageFlags.Ephemeral
 				})
 			);
 
 			if (!suggestionResult.ok) {
 				return suggestionResult;
 			}
-
-			followUp = true;
 		} else if (hasThreadsPermission.type === "MISSING_PERMISSIONS") {
 			return await Result.fromPromise(
 				{ onError: { type: "REPLY_MAX_ACTIVE_TICKETS_PER_USER" } },
-				interaction.editReply({
-					content: `You can only have a maximum of ${ticketChannel.limitPerUser} ticket(s) open at once. You're open tickets: ${threadLinks}`
+				interaction.followUp({
+					content: `You can only have a maximum of ${ticketChannel.limitPerUser} ticket(s) open at once. You're open tickets: ${threadLinks}`,
+					flags: MessageFlags.Ephemeral
 				})
 			);
 		} else {
@@ -137,20 +137,24 @@ export async function openTicketFlow({
 
 	const createTicketResult = await tickets.createTicket(interaction, ticketChannel);
 	if (!createTicketResult.ok) {
-		const content = errorMessage.build("Failed to create ticket, please try again later").value;
 		const replyErrorResult = await Result.fromPromise(
 			{ onError: { type: "REPLY_FAILED_TO_CREATE_TICKET" } },
-			followUp ? interaction.followUp({ ...content }) : interaction.editReply({ ...content })
+			interaction.followUp({
+				...errorMessage.build("Failed to create ticket, please try again later").value,
+				flags: MessageFlags.Ephemeral
+			})
 		);
 		return Result.all(createTicketResult, replyErrorResult);
 	}
 
 	const { thread } = createTicketResult.value;
-	const content = openTicketReplyMessage.build(interaction.guild.id, thread.id).value;
 
 	return await Result.fromPromise(
 		{ onError: { type: "REPLY_BOT_TICKET_OPENED" } },
-		followUp ? interaction.followUp({ ...content }) : interaction.editReply({ ...content })
+		interaction.followUp({
+			...openTicketReplyMessage.build(interaction.guild.id, thread.id).value,
+			flags: MessageFlags.Ephemeral
+		})
 	);
 }
 
