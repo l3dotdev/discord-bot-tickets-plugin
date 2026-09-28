@@ -1,15 +1,11 @@
-import {
-	defineEventListener,
-	hasDiscordPermissions,
-	iHaveDiscordPermissions
-} from "@l3dev/discord.js-helpers";
+import { defineEventListener } from "@l3dev/discord.js-helpers";
 import { NONE, Result } from "@l3dev/result";
 import { Events, MessageFlags } from "discord.js";
 
 import { ModalCustomId } from "../constants.js";
+import { checkOpenThreadPermissionsFlow, openTicketFlow } from "./open-ticket.event.js";
 import type { Logic } from "../logic/index.js";
 import { errorMessage } from "../messages/error.message.js";
-import { openTicketReplyMessage } from "../messages/open-ticket-reply.message.js";
 
 export default function ({ tickets, ticketChannels }: Logic) {
 	return {
@@ -34,6 +30,7 @@ export default function ({ tickets, ticketChannels }: Logic) {
 				const ticketChannelResult = await ticketChannels.getChannel(ticketChannelId);
 				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
 					const replyErrorResult = await Result.fromPromise(
+						{ onError: { type: "REPLY_FAILED_TO_FIND_TICKET_CHANNEL" } },
 						interaction.reply({
 							...errorMessage.build("Failed to find ticket channel").value,
 							flags: MessageFlags.Ephemeral
@@ -44,108 +41,16 @@ export default function ({ tickets, ticketChannels }: Logic) {
 
 				const ticketChannel = ticketChannelResult.value;
 
-				const threadsPermission = ticketChannels.getChannelThreadsPermission(ticketChannel);
-				const permissionsResult = await iHaveDiscordPermissions(
-					["ManageThreads", "SendMessagesInThreads", threadsPermission],
-					{
-						guild: interaction.guild,
-						channel
-					}
-				);
-				if (!permissionsResult.ok) {
-					if (permissionsResult.type === "MISSING_PERMISSIONS") {
-						const missingPermissions = permissionsResult.context.missingPermissions
-							.map((p) => `\`${p}\``)
-							.join(", ");
-						return await Result.fromPromise(
-							interaction.reply({
-								...errorMessage.build(`Missing permissions: ${missingPermissions}`).value,
-								flags: MessageFlags.Ephemeral
-							})
-						);
-					}
-					return await Result.fromPromise(
-						interaction.reply({
-							...errorMessage.build("Failed to check permissions").value,
-							flags: MessageFlags.Ephemeral
-						})
-					);
-				}
-
-				const deferResult = await Result.fromPromise(
-					interaction.deferReply({
-						flags: MessageFlags.Ephemeral
-					})
-				);
-				if (!deferResult.ok) {
-					const replyErrorResult = await Result.fromPromise(
-						interaction.followUp({
-							...errorMessage.build("Failed to respond").value
-						})
-					);
-					return Result.all(deferResult, replyErrorResult);
-				}
-
-				const checkTicketLimitResult = await tickets.checkTicketLimit(
-					interaction.user,
+				const permissionsResult = await checkOpenThreadPermissionsFlow({
+					interaction,
+					ticketChannels,
 					ticketChannel
-				);
-				if (!checkTicketLimitResult.ok) {
-					const replyErrorResult = await Result.fromPromise(
-						interaction.editReply({
-							...errorMessage.build("Failed to create ticket, please try again later").value
-						})
-					);
-					return Result.all(checkTicketLimitResult, replyErrorResult);
+				});
+				if (!permissionsResult.ok) {
+					return permissionsResult;
 				}
 
-				if (checkTicketLimitResult.value.exceeded) {
-					const threadLinks = checkTicketLimitResult.value.threadIds
-						.map((threadId) => `https://discord.com/channels/${interaction.guildId}/${threadId}`)
-						.join(", ");
-					if (
-						await hasDiscordPermissions(interaction.member, [threadsPermission], {
-							guild: interaction.guild,
-							channel
-						})
-					) {
-						const suggestionResult = await Result.fromPromise(
-							{ onError: { type: "REPLY_MAX_ACTIVE_TICKETS_PER_USER_SUGGESTION" } },
-							interaction.followUp({
-								content: `You have more than ${ticketChannel.limitPerUser} open ticket(s), you may want to close some before opening more. You're open tickets: ${threadLinks}`
-							})
-						);
-						if (!suggestionResult.ok) {
-							return suggestionResult;
-						}
-					} else {
-						return await Result.fromPromise(
-							{ onError: { type: "REPLY_MAX_ACTIVE_TICKETS_PER_USER" } },
-							interaction.editReply({
-								content: `You can only have a maximum of ${ticketChannel.limitPerUser} ticket(s) open at once. You're open tickets: ${threadLinks}`
-							})
-						);
-					}
-				}
-
-				const createTicketResult = await tickets.createTicket(interaction, ticketChannel);
-				if (!createTicketResult.ok) {
-					const replyErrorResult = await Result.fromPromise(
-						interaction.editReply({
-							...errorMessage.build("Failed to create ticket, please try again later").value
-						})
-					);
-					return Result.all(createTicketResult, replyErrorResult);
-				}
-
-				const { thread } = createTicketResult.value;
-
-				return await Result.fromPromise(
-					{ onError: { type: "REPLY_BOT_TICKET_OPENED" } },
-					interaction.editReply({
-						...openTicketReplyMessage.build(interaction.guild.id, thread.id).value
-					})
-				);
+				return await openTicketFlow({ interaction, ticketChannels, ticketChannel, tickets });
 			}
 		})
 	};
