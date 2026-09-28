@@ -1,4 +1,8 @@
-import { defineEventListener, iHaveDiscordPermissions } from "@l3dev/discord.js-helpers";
+import {
+	defineEventListener,
+	hasDiscordPermissions,
+	iHaveDiscordPermissions
+} from "@l3dev/discord.js-helpers";
 import { NONE, Result } from "@l3dev/result";
 import { Events, MessageFlags } from "discord.js";
 
@@ -15,6 +19,7 @@ export default function ({ tickets, ticketChannels }: Logic) {
 				const channel = interaction.channel;
 				if (
 					!interaction.guild ||
+					!interaction.inCachedGuild() ||
 					!interaction.isModalSubmit() ||
 					!interaction.customId.startsWith(ModalCustomId.BotTicketModal) ||
 					!channel ||
@@ -39,12 +44,9 @@ export default function ({ tickets, ticketChannels }: Logic) {
 
 				const ticketChannel = ticketChannelResult.value;
 
+				const threadsPermission = ticketChannels.getChannelThreadsPermission(ticketChannel);
 				const permissionsResult = await iHaveDiscordPermissions(
-					[
-						"ManageThreads",
-						"SendMessagesInThreads",
-						ticketChannels.getChannelThreadsPermission(ticketChannel)
-					],
+					["ManageThreads", "SendMessagesInThreads", threadsPermission],
 					{
 						guild: interaction.guild,
 						channel
@@ -97,13 +99,33 @@ export default function ({ tickets, ticketChannels }: Logic) {
 					return Result.all(checkTicketLimitResult, replyErrorResult);
 				}
 
-				if (!checkTicketLimitResult.value) {
-					return await Result.fromPromise(
-						{ onError: { type: "REPLY_MAX_ACTIVE_TICKETS_PER_USER" } },
-						interaction.editReply({
-							content: `You can only have a maximum of ${ticketChannel.limitPerUser} ticket(s) open at once`
+				if (checkTicketLimitResult.value.exceeded) {
+					const threadLinks = checkTicketLimitResult.value.threadIds
+						.map((threadId) => `https://discord.com/channels/${interaction.guildId}/${threadId}`)
+						.join(", ");
+					if (
+						await hasDiscordPermissions(interaction.member, [threadsPermission], {
+							guild: interaction.guild,
+							channel
 						})
-					);
+					) {
+						const suggestionResult = await Result.fromPromise(
+							{ onError: { type: "REPLY_MAX_ACTIVE_TICKETS_PER_USER_SUGGESTION" } },
+							interaction.followUp({
+								content: `You have more than ${ticketChannel.limitPerUser} open ticket(s), you may want to close some before opening more. You're open tickets: ${threadLinks}`
+							})
+						);
+						if (!suggestionResult.ok) {
+							return suggestionResult;
+						}
+					} else {
+						return await Result.fromPromise(
+							{ onError: { type: "REPLY_MAX_ACTIVE_TICKETS_PER_USER" } },
+							interaction.editReply({
+								content: `You can only have a maximum of ${ticketChannel.limitPerUser} ticket(s) open at once. You're open tickets: ${threadLinks}`
+							})
+						);
+					}
 				}
 
 				const createTicketResult = await tickets.createTicket(interaction, ticketChannel);

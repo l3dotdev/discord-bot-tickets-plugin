@@ -10,7 +10,7 @@ import {
 	type PublicThreadChannel,
 	type User
 } from "discord.js";
-import { and, count, eq, isNull } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 
 import { Repository, type Database } from "./repository.js";
 import { resolveTemplate } from "./templates.js";
@@ -51,7 +51,7 @@ export class Tickets extends Repository {
 		const activeTicketCountResult = await this.db.safeExecute(
 			"BOT_TICKET_COUNT",
 			this.db
-				.select({ count: count() })
+				.select({ discordThreadId: tables.botTickets.discordThreadId })
 				.from(tables.botTickets)
 				.where(
 					and(
@@ -65,7 +65,12 @@ export class Tickets extends Repository {
 			return activeTicketCountResult;
 		}
 
-		return ok(activeTicketCountResult.value[0].count < ticketChannel.limitPerUser);
+		const threads = activeTicketCountResult.value;
+
+		return ok({
+			exceeded: threads.length >= ticketChannel.limitPerUser,
+			threadIds: threads.map((thread) => thread.discordThreadId)
+		});
 	}
 
 	async createTicket(
