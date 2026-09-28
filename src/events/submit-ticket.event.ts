@@ -23,8 +23,28 @@ export default function ({ tickets, ticketChannels }: Logic) {
 					return NONE;
 				}
 
+				const ticketChannelId = Number(
+					interaction.customId.replace(`${ModalCustomId.BotTicketModal}-`, "")
+				);
+				const ticketChannelResult = await ticketChannels.getChannel(ticketChannelId);
+				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
+					const replyErrorResult = await Result.fromPromise(
+						interaction.reply({
+							...errorMessage.build("Failed to find ticket channel").value,
+							flags: MessageFlags.Ephemeral
+						})
+					);
+					return Result.all(ticketChannelResult, replyErrorResult);
+				}
+
+				const ticketChannel = ticketChannelResult.value;
+
 				const permissionsResult = await iHaveDiscordPermissions(
-					["ManageThreads", "CreatePublicThreads", "CreatePrivateThreads", "SendMessagesInThreads"],
+					[
+						"ManageThreads",
+						"SendMessagesInThreads",
+						ticketChannels.getChannelThreadsPermission(ticketChannel)
+					],
 					{
 						guild: interaction.guild,
 						channel
@@ -49,22 +69,6 @@ export default function ({ tickets, ticketChannels }: Logic) {
 						})
 					);
 				}
-
-				const ticketChannelId = Number(
-					interaction.customId.replace(`${ModalCustomId.BotTicketModal}-`, "")
-				);
-				const ticketChannelResult = await ticketChannels.getChannel(ticketChannelId);
-				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
-					const replyErrorResult = await Result.fromPromise(
-						interaction.reply({
-							...errorMessage.build("Failed to find ticket channel").value,
-							flags: MessageFlags.Ephemeral
-						})
-					);
-					return Result.all(ticketChannelResult, replyErrorResult);
-				}
-
-				const ticketChannel = ticketChannelResult.value;
 
 				const deferResult = await Result.fromPromise(
 					interaction.deferReply({

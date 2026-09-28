@@ -22,13 +22,27 @@ export default function ({ ticketChannels }: Logic) {
 					return NONE;
 				}
 
+				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(channel.id);
+				if (!ticketChannelResult.ok) {
+					const replyErrorResult = await Result.fromPromise(
+						interaction.reply({
+							...errorMessage.build("Failed to check for existing ticket channel").value,
+							flags: MessageFlags.Ephemeral
+						})
+					);
+					return Result.all(ticketChannelResult, replyErrorResult);
+				}
+
+				const ticketChannel = ticketChannelResult.value;
+
 				const permissionsResult = await iHaveDiscordPermissions(
 					[
 						"SendMessages",
 						"ManageThreads",
-						"CreatePublicThreads",
-						"CreatePrivateThreads",
-						"SendMessagesInThreads"
+						"SendMessagesInThreads",
+						ticketChannel
+							? ticketChannels.getChannelThreadsPermission(ticketChannel)
+							: "CreatePrivateThreads"
 					],
 					{
 						guild: interaction.guild,
@@ -55,17 +69,6 @@ export default function ({ ticketChannels }: Logic) {
 					);
 				}
 
-				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(channel.id);
-				if (!ticketChannelResult.ok) {
-					const replyErrorResult = await Result.fromPromise(
-						interaction.reply({
-							...errorMessage.build("Failed to check for existing ticket channel").value,
-							flags: MessageFlags.Ephemeral
-						})
-					);
-					return Result.all(ticketChannelResult, replyErrorResult);
-				}
-
 				const deferResult = await Result.fromPromise(
 					interaction.deferReply({
 						flags: MessageFlags.Ephemeral
@@ -80,7 +83,6 @@ export default function ({ ticketChannels }: Logic) {
 					return Result.all(deferResult, replyErrorResult);
 				}
 
-				const ticketChannel = ticketChannelResult.value;
 				if (ticketChannel) {
 					const editTicketChannelResult = await ticketChannels.editChannel(
 						interaction,

@@ -1,7 +1,12 @@
 import { getChannel, getMessage } from "@l3dev/discord.js-helpers";
 import type { InlineTransaction } from "@l3dev/drizzle-helpers";
 import { err, ok, Result } from "@l3dev/result";
-import type { Client, ModalSubmitInteraction, TextBasedChannel } from "discord.js";
+import type {
+	Client,
+	ModalSubmitInteraction,
+	PermissionFlagsBits,
+	TextBasedChannel
+} from "discord.js";
 import { and, eq, isNull } from "drizzle-orm";
 
 import { Repository } from "./repository.js";
@@ -39,6 +44,11 @@ export class TicketChannels extends Repository {
 		}
 
 		return ok(channelResult.value.length ? channelResult.value[0] : null);
+	}
+
+	getChannelThreadsPermission(channel: DbBotTicketChannel): keyof typeof PermissionFlagsBits {
+		const visibility = channel.ticketThreadVisibility as "public" | "private";
+		return visibility === "public" ? "CreatePublicThreads" : "CreatePrivateThreads";
 	}
 
 	async createChannel(interaction: ModalSubmitInteraction, channel: TextBasedChannel) {

@@ -21,13 +21,27 @@ export default function ({ ticketChannels }: Logic) {
 					return NONE;
 				}
 
+				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(channel.id);
+				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
+					if (!ticketChannelResult.ok) {
+						logger.error("Error getting ticket channel", ticketChannelResult);
+					}
+					return await Result.fromPromise(
+						interaction.reply({
+							...errorMessage.build("Failed to find existing ticket channel").value,
+							flags: MessageFlags.Ephemeral
+						})
+					);
+				}
+
+				const ticketChannel = ticketChannelResult.value;
+
 				const permissionsResult = await iHaveDiscordPermissions(
 					[
 						"SendMessages",
 						"ManageThreads",
-						"CreatePublicThreads",
-						"CreatePrivateThreads",
-						"SendMessagesInThreads"
+						"SendMessagesInThreads",
+						ticketChannels.getChannelThreadsPermission(ticketChannel)
 					],
 					{
 						guild: interaction.guild,
@@ -53,21 +67,6 @@ export default function ({ ticketChannels }: Logic) {
 						})
 					);
 				}
-
-				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(channel.id);
-				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
-					if (!ticketChannelResult.ok) {
-						logger.error("Error getting ticket channel", ticketChannelResult);
-					}
-					return await Result.fromPromise(
-						interaction.reply({
-							...errorMessage.build("Failed to find existing ticket channel").value,
-							flags: MessageFlags.Ephemeral
-						})
-					);
-				}
-
-				const ticketChannel = ticketChannelResult.value;
 
 				const sendResult = await ticketChannels.sendOrReplaceChannelMessage(
 					interaction.client,

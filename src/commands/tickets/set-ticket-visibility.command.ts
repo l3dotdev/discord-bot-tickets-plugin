@@ -1,4 +1,4 @@
-import { defineSubcommand } from "@l3dev/discord.js-helpers";
+import { defineSubcommand, iHaveDiscordPermissions } from "@l3dev/discord.js-helpers";
 import { logger } from "@l3dev/logger";
 import { Result } from "@l3dev/result";
 import { MessageFlags } from "discord.js";
@@ -26,7 +26,8 @@ export default function ({ ticketChannels }: Logic) {
 					);
 			},
 			async execute(interaction) {
-				if (!interaction.channel || !interaction.channel.isSendable()) {
+				const channel = interaction.channel;
+				if (!interaction.guild || !channel || channel.isDMBased() || !channel.isSendable()) {
 					return await Result.fromPromise(
 						interaction.reply({
 							...errorMessage.build("Run command in a valid channel").value,
@@ -35,9 +36,39 @@ export default function ({ ticketChannels }: Logic) {
 					);
 				}
 
-				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(
-					interaction.channel.id
+				const visibility = interaction.options.getString("visibility", true) as
+					| "public"
+					| "private";
+
+				const permissionsResult = await iHaveDiscordPermissions(
+					[visibility === "public" ? "CreatePublicThreads" : "CreatePrivateThreads"],
+					{
+						guild: interaction.guild,
+						channel
+					}
 				);
+
+				if (!permissionsResult.ok) {
+					if (permissionsResult.type === "MISSING_PERMISSIONS") {
+						const missingPermissions = permissionsResult.context.missingPermissions
+							.map((p) => `\`${p}\``)
+							.join(", ");
+						return await Result.fromPromise(
+							interaction.reply({
+								...errorMessage.build(`Missing permissions: ${missingPermissions}`).value,
+								flags: MessageFlags.Ephemeral
+							})
+						);
+					}
+					return await Result.fromPromise(
+						interaction.reply({
+							...errorMessage.build("Failed to check permissions").value,
+							flags: MessageFlags.Ephemeral
+						})
+					);
+				}
+
+				const ticketChannelResult = await ticketChannels.getChannelByDiscordId(channel.id);
 				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
 					if (!ticketChannelResult.ok) {
 						logger.error("Error getting ticket channel", ticketChannelResult);
@@ -51,10 +82,6 @@ export default function ({ ticketChannels }: Logic) {
 				}
 
 				const ticketChannel = ticketChannelResult.value;
-
-				const visibility = interaction.options.getString("visibility", true) as
-					| "public"
-					| "private";
 
 				const setVisibilityResult = await ticketChannels.setChannelVisibility(
 					ticketChannel,

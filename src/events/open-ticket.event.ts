@@ -24,8 +24,28 @@ export default function ({ ticketChannels, ticketFields, tickets }: Logic) {
 					return NONE;
 				}
 
+				const ticketChannelId = Number(
+					interaction.customId.replace(`${ButtonCustomId.OpenBotTicket}-`, "")
+				);
+				const ticketChannelResult = await ticketChannels.getChannel(ticketChannelId);
+				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
+					const replyErrorResult = await Result.fromPromise(
+						interaction.reply({
+							...errorMessage.build("Failed to get ticket channel data").value,
+							flags: MessageFlags.Ephemeral
+						})
+					);
+					return Result.all(ticketChannelResult, replyErrorResult);
+				}
+
+				const ticketChannel = ticketChannelResult.value;
+
 				const permissionsResult = await iHaveDiscordPermissions(
-					["ManageThreads", "SendMessagesInThreads", "CreatePublicThreads", "CreatePrivateThreads"],
+					[
+						"ManageThreads",
+						"SendMessagesInThreads",
+						ticketChannels.getChannelThreadsPermission(ticketChannel)
+					],
 					{
 						guild: interaction.guild,
 						channel
@@ -50,22 +70,6 @@ export default function ({ ticketChannels, ticketFields, tickets }: Logic) {
 						})
 					);
 				}
-
-				const ticketChannelId = Number(
-					interaction.customId.replace(`${ButtonCustomId.OpenBotTicket}-`, "")
-				);
-				const ticketChannelResult = await ticketChannels.getChannel(ticketChannelId);
-				if (!ticketChannelResult.ok || !ticketChannelResult.value) {
-					const replyErrorResult = await Result.fromPromise(
-						interaction.reply({
-							...errorMessage.build("Failed to get ticket channel data").value,
-							flags: MessageFlags.Ephemeral
-						})
-					);
-					return Result.all(ticketChannelResult, replyErrorResult);
-				}
-
-				const ticketChannel = ticketChannelResult.value;
 
 				const fieldsResult = await ticketFields.getChannelFields(ticketChannel.id);
 				if (!fieldsResult.ok) {

@@ -23,13 +23,7 @@ export default function ({ ticketChannels }: Logic) {
 				}
 
 				const permissionsResult = await iHaveDiscordPermissions(
-					[
-						"SendMessages",
-						"ManageThreads",
-						"CreatePublicThreads",
-						"CreatePrivateThreads",
-						"SendMessagesInThreads"
-					],
+					["SendMessages", "ManageThreads", "CreatePrivateThreads", "SendMessagesInThreads"],
 					{
 						guild: interaction.guild,
 						channel
